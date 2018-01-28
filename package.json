@@ -1,0 +1,16 @@
+{
+	"name": "cli-compiler",
+	"bin": "cli-compiler",
+	"version": "0.0.1",
+	"description": "Cli application that compiles SimpleC",
+	"main": "index.js",
+	"scripts": {
+		"test": "test"
+	},
+	"author": "Ivaylo Pavlov",
+	"license": "ISC",
+	"dependencies": {
+		"commander": "^2.13.0",
+		"shelljs": "^0.8.1"
+	}
+}
