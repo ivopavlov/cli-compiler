@@ -13,8 +13,16 @@ var readFile = (file, cmd) => {
 	}
 	if (!catOutput.stdout) {
 		console.log('No content available');
+		return;
 	}
 	var tokens = Tokenizer.analyze(catOutput.stdout);
+	var ast = null;
+	if (tokens && tokens.length > 0) {
+		ast = Parser.parse(tokens);
+	} else {
+		console.log('Tokenizer output failed');
+		return;
+	}
 	console.log(tokens);
 }
 

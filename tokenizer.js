@@ -3,6 +3,8 @@
 const WHITESPASE = /\s/;
 const NUMBERS = /[0-9]/;
 const LETTERS = /[a-z]/i;
+const KEYWORDS = ['scanf', 'printf'];
+const VARTYPES = ['int'];
 
 module.exports = {
 	analyze: (text) => {
@@ -31,13 +33,22 @@ module.exports = {
 					value += curChar;
 					curChar = text[++pointer];
 				}
-				tokens.push({ type: 'name', value });
+				if (value.length > 1) {
+					if (KEYWORDS.indexOf(value) != -1) {
+						tokens.push({ type: 'keyword', value})
+					} else if (VARTYPES.indexOf(value) != -1) {
+						tokens.push({type: 'variable', value});
+					}
+				} else {
+					tokens.push({ type: 'ident', value });
+				}
 				continue;
 			}
 
 			if (curChar === '(') {
 				tokens.push({
-					type: 'paren',
+					type: 'specialSymbol',
+					name: 'lparen',
 					value: '(',
 				});
 				pointer++;
@@ -45,7 +56,8 @@ module.exports = {
 			}
 			if (curChar === ')') {
 				tokens.push({
-					type: 'paren',
+					type: 'specialSymbol',
+					name: 'rparen',
 					value: ')',
 				});
 				pointer++;
@@ -66,8 +78,8 @@ module.exports = {
 
 			if (curChar == '=') {
 				tokens.push({
-					type: 'operator',
-					subtype: 'assign',
+					type: 'specialSymbol',
+					name: 'assign',
 					value: '=',
 				});
 				pointer++;
@@ -76,7 +88,8 @@ module.exports = {
 
 			if (curChar == ';') {
 				tokens.push({
-					type: 'semicolon',
+					type: 'specialSymbol',
+					name: 'semicolon',
 					value: ';',
 				});
 				pointer++;
@@ -85,8 +98,8 @@ module.exports = {
 
 			if (curChar == '*') {
 				tokens.push({
-					type: 'operator',
-					subtype: 'multiplication',
+					type: 'specialSymbol',
+					name: 'multiplication',
 					value: '*',
 				});
 				pointer++;
@@ -95,14 +108,14 @@ module.exports = {
 
 			if (curChar == '+') {
 				tokens.push({
-					type: 'operator',
-					subtype: 'add',
+					type: 'specialSymbol',
+					name: 'add',
 					value: '+',
 				});
 				pointer++;
 				continue;
 			}
-			
+
 			throw new TypeError('Unknown character: ' + curChar);
 		}
 		return tokens;
