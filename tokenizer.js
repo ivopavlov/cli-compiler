@@ -19,9 +19,16 @@ module.exports = {
 			}
 
 			if (NUMBERS.test(curChar)) {
+				var counter = 0;
+				var value;
 				while (NUMBERS.test(curChar)) {
-					value += curChar;
+					if (counter === 0) {
+						value = curChar
+					} else {
+						value += curChar;
+					}
 					curChar = text[++pointer];
+					counter++;
 				}
 				tokens.push({ type: 'number', value });
 				continue;
@@ -37,7 +44,15 @@ module.exports = {
 					if (KEYWORDS.indexOf(value) != -1) {
 						tokens.push({ type: 'keyword', value})
 					} else if (VARTYPES.indexOf(value) != -1) {
-						tokens.push({type: 'variable', value});
+						var kind;
+						switch (value) {
+							case 'int':
+								kind = 'numeric';
+								break;
+							default:
+								kind = 'numeric';
+						}
+						tokens.push({type: 'variable', kind, value});
 					}
 				} else {
 					tokens.push({ type: 'ident', value });
