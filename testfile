@@ -1,4 +1,8 @@
 int A = 5;
 int B = 10;
 int C = scanf();
+int D = scanf();
+printf(A);
+printf(B);
 printf(C);
+printf(D);

@@ -28,12 +28,6 @@ module.exports = {
 												`mov ebx, 2`,
 												`mov ecx, ${data.ident}`,
 												`mov edx, 5`,
-												`int 80h`,
-
-												`mov eax, 4`,
-												`mov ebx, 1`,
-												`mov ecx, ${data.ident}`,
-												`mov edx, 5`,
 												`int 80h\n`
 											);
 										}
