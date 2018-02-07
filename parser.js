@@ -1,8 +1,84 @@
 'use strict'
 
+function readValue(tokenReader) {
+	switch (t.type) {
+	case "ident":
+		return {
+			"type": "Identifier",
+			"name": t.name,
+			"type": t.type,
+		}
+	case "number":
+		return {
+			"type": "Literal",
+			"value": t.value,
+		}
+	default:
+		throw "Unexpected token " + JSON.stringify(t)
+	}
+}
+
+function handle(tokenReader) {
+	var left = readValue(tokenReader)
+
+	var t = tokenReader.current()
+	switch (t.type) {
+		case "ident":
+			var left = {
+				"type": "Identifier",
+				"name": "a",
+			}
+		case 'specialSymbol':
+			switch (t.name) {
+				case 'add':
+				case 'sub':
+				case 'mul':
+				case 'div':
+					var right = handle(tokenReader)
+					return {
+						type: "BinaryExpression",
+						left: left,
+						right: right,
+						operator: t.name,
+					}
+					break;
+
+				case 'rparen':
+					if (ast.body[pointer].type == 'expressionStatement') {
+						// continue reading statement
+					}
+					break;
+				default:
+					console.log('Unsupported specialSymbol:', t.name);
+			}
+			break;
+		default:
+
+	}
+}
+
+var TokenReader(tokens) {
+	var i = 0;
+	return {
+		next: function () {
+			i++;
+			return tokens[i]
+		},
+		current: function() {
+			return tokens[i]
+		},
+		reverse: function() {
+			i--;
+		}
+	}
+}
+
 var ast = null;
 module.exports = {
 	parse: (tokens) => {
+
+		var tokenReader = new TokenReader(tokens)
+
 		if (tokens && tokens.length > 0) {
 			ast = {
 				type: 'program',
@@ -15,8 +91,14 @@ module.exports = {
 				}
 				switch (t.type) {
 					case 'variable':
-						ast.body[pointer].type = 'varDeclaration';
-						ast.body[pointer].kind = t.kind;
+						ast.body[pointer] = {
+							"type": "VariableDeclarator",
+							"id": {
+								"type": "Identifier",
+								"name": "a",
+							},
+							init: handle(tokenReader),
+						}
 						break;
 					case 'ident':
 						if (ast.body[pointer].type == 'varDeclaration') {
