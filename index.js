@@ -4,6 +4,8 @@ const program = require('commander');
 const shell = require('shelljs');
 const fs = require('fs');
 
+var mockup = require('./ast-mockup.js');
+
 const Tokenizer = require('./tokenizer.js');
 const Parser = require('./parser.js');
 const Generator = require('./generator.js');
@@ -24,17 +26,18 @@ var readFile = (file, cmd) => {
 	var code = null;
 	if (tokens && tokens.length > 0) {
 		ast = Parser.parse(tokens);
+		console.log(JSON.stringify(mockup));
 		// console.log(JSON.stringify(ast));
-		if (ast) {
-			var { sectionText, _start, sectionData, sectionBss } = Generator.generate(ast);
-			fs.writeFile('./outputfiles/program.asm', writeString(sectionText, _start, sectionData, sectionBss), (err) => {
-				if (err) throw err;
-				console.log("The file was succesfully saved!");
-				console.log('Use nasm -f elf ../outputfiles/program.asm && ld -m elf_i386 -s -o program ../outputfiles/program.o to build');
-			})
-		} else {
-			console.log('Parser output failed');
-		}
+		// if (ast) {
+		// 	var { sectionText, _start, sectionData, sectionBss } = Generator.generate(ast);
+		// 	fs.writeFile('./outputfiles/program.asm', writeString(sectionText, _start, sectionData, sectionBss), (err) => {
+		// 		if (err) throw err;
+		// 		console.log("The file was succesfully saved!");
+		// 		console.log('Use nasm -f elf ../outputfiles/program.asm && ld -m elf_i386 -s -o program ../outputfiles/program.o to build');
+		// 	})
+		// } else {
+		// 	console.log('Parser output failed');
+		// }
 	} else {
 		console.log('Tokenizer output failed');
 		return;
