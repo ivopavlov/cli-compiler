@@ -4,11 +4,17 @@ module.exports = {
 		// int a;
 		{
 			type: 'variableDeclaration',
-			id: {
-				type: 'identifier',
-				name: 'a'
-			},
-			init: null
+			kind: 'int',
+			declarations: [
+				{
+					type: 'variableDeclarator',
+					id: {
+						type: 'identifier',
+						name: 'a'
+					},
+					init: null
+				}
+			]
 		},
 		// a = 2;
 		{
