@@ -4,7 +4,7 @@ const program = require('commander');
 const shell = require('shelljs');
 const fs = require('fs');
 
-var mockup = require('./ast-mockup.js');
+var mockup = require('./generator-test.js');
 
 const Tokenizer = require('./tokenizer.js');
 const Parser = require('./parser.js');
@@ -26,7 +26,7 @@ var readFile = (file, cmd) => {
 	var code = null;
 	if (tokens && tokens.length > 0) {
 		ast = Parser.parse(tokens);
-		console.log(JSON.stringify(mockup));
+		// console.log(JSON.stringify(ast));
 		// console.log(JSON.stringify(ast));
 		// if (ast) {
 		// 	var { sectionText, _start, sectionData, sectionBss } = Generator.generate(ast);

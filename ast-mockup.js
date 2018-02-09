@@ -94,7 +94,7 @@ module.exports = {
 				}
 			]
 		},
-		// int d = a + b + c
+		// int d = a + b * c
 		{
 			type: 'variableDeclaration',
 			kind: 'int',
@@ -147,6 +147,31 @@ module.exports = {
 					]
 				}
 			}
+		},
+		// int f = scanf()
+		{
+			type: 'variableDeclaration',
+			kind: 'int',
+			declarations: [
+				{
+					type: 'variableDeclarator',
+					id: {
+						type: 'identifier',
+						name: 'f'
+					},
+					init: {
+						type: 'callExpression',
+						callee: {
+							type: 'memberExpression',
+							object: {
+								type: 'itentifier',
+								name: 'scanf'
+							},
+							arguments: null
+						}
+					}
+				}
+			]
 		}
 	]
 }
