@@ -133,6 +133,7 @@ module.exports = {
 
 			throw new TypeError('Unknown character: ' + curChar);
 		}
+		tokens.push({type: 'eof'})
 		return tokens;
 	}
 }
