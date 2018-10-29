@@ -24,7 +24,7 @@ var readFile = (file, cmd) => {
 	var code = null;
 	if (tokens && tokens.length > 0) {
 		ast = Parser.parse(tokens);
-		// console.log(JSON.stringify(ast));
+
 		if (ast) {
 			var { sectionText, _start, sectionData, sectionBss } = Generator.generate(ast);
 			fs.writeFile('./outputfiles/program.asm', writeString(sectionText, _start, sectionData, sectionBss), (err) => {
@@ -39,7 +39,6 @@ var readFile = (file, cmd) => {
 		console.log('Tokenizer output failed');
 		return;
 	}
-	// console.log(tokens);
 }
 
 var writeString = (sectionText, _start, sectionData, sectionBss) => {
