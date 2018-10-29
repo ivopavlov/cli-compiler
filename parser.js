@@ -77,7 +77,6 @@ module.exports = {
 						console.log('Unsupported token:', t);
 				}
 			}
-			// console.log(tokens);
 			return ast;
 		}
 	}
