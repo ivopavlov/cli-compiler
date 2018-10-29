@@ -66,7 +66,6 @@ module.exports = {
 							ast.body[pointer].type = 'expressionStatement';
 							ast.body[pointer].ident = t.value;
 						} else if (ast.body[pointer].type == 'varDeclaration') {
-							// console.log(ast.body[pointer]);
 							ast.body[pointer].varDeclarator.value = {
 								type: 'expressionStatement',
 								ident: t.value
